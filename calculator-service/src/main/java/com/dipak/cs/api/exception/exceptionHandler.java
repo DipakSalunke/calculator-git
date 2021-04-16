@@ -34,6 +34,20 @@ public class exceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
+
+		/**
+		 * customized default error message for spring @Valid validation
+		 * 
+		 * This method will handle {@link MethodArgumentNotValidException}
+		 * exception, whenever there is a invalid argument in the input provided then from this
+		 * method it will get handled.
+		 * 
+		 * @param MethodArgumentNotValidException object,web request
+		 * @return {@link ErrorDetails} object Exception format in the form of
+		 *         Custom Error Response object
+		 * 
+		 * @see ErrorDetails
+		 */
 	@Override
 	public ResponseEntity<Object>  handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getBindingResult().getFieldErrors().stream()

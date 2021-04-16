@@ -1,5 +1,8 @@
 package com.dipak.cs.api.controller;
 
+import java.util.Map;
+import java.util.Optional;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -19,40 +22,68 @@ import com.dipak.cs.api.model.Replay;
 import com.dipak.cs.api.model.RequestedOperation;
 import com.dipak.cs.api.service.OperationService;
 
+/**
+ * @author Dipak
+ * @version 1
+ * @apiNote This class is handling all the end points for calculator service.
+ *          This controller has three mappings for performing operation, getting
+ *          list of operations performed and to replay any of the operation.
+ * 
+ * @see OperationService
+ * @see RequestedOperation
+ */
 @RestController
 @RequestMapping("/api")
 public class OperationController {
+	/**
+	 * A service that contains the business logic for calculator
+	 * 
+	 * @see OperationService
+	 */
 	@Autowired
 	private OperationService service;
 
+	/**
+	 * This method will return result of the operation. First this method will check
+	 * whether the date coming in the request parameter is valid.
+	 * 
+	 * @param operation request body will be serialized to RequestedOperation model
+	 *                  and validated
+	 * @return result
+	 */
 	@PostMapping("/operation")
-	public ResponseEntity<OpResult> operation(@RequestBody @Valid RequestedOperation roperation){
+	public ResponseEntity<OpResult> operation(@RequestBody @Valid RequestedOperation roperation) {
 		
-		Operation operation = new Operation() ;
-		
-		operation.setNum1(Double.parseDouble(roperation.getNum1()));
-		operation.setNum2(Double.parseDouble(roperation.getNum2()));
-		operation.setOperator(roperation.getOperator());
-		
-		OpResult result = service.saveOperation(operation);
+		OpResult result = service.saveOperation(roperation);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
+	/**
+	 * This method will return list of operations performed in the past during the
+	 * session.
+	 * 
+	 * @return Map of id and operations
+	 */
 	@GetMapping("/operations")
-	public ResponseEntity<?> listOperations() {
+	public ResponseEntity<Map<Integer, String>> listOperations() {
 		
-		return new ResponseEntity<>(service.getOperations(), HttpStatus.OK);
+		Map<Integer, String> list = service.getOperations();
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-	
+
+	/**
+	 * This method will replay the operation performed in the past.
+	 * 
+	 * @param Replay This model holds id of the requested operation
+	 * @return result
+	 */
 	@GetMapping("/operation/replay")
-	public ResponseEntity<?> replayOperation(@RequestBody @Valid Replay replay) {
-		return new ResponseEntity<>(service.getResult(replay.getReplaySeq()), HttpStatus.OK);
+	public ResponseEntity<Optional<OpResult>> replayOperation(@RequestBody @Valid Replay replay) {
+		
+		Optional<OpResult> result = service.getResult(replay.getReplaySeq());
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-//	@GetMapping("/operation/replay2")
-//	public ModelAndView replayOperation2(@RequestBody @Valid Replay replay) {
-//		request.
-//		return new ResponseEntity<>(service.getOperation(replay.getReplaySeq()), HttpStatus.OK);
-//	}
 }

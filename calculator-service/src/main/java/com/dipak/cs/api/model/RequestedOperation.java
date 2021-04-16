@@ -1,11 +1,19 @@
 package com.dipak.cs.api.model;
 
 import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+/**
+ * @author Dipak
+ * @version 1
+ * @apiNote Model class whose fields are used for the input for operation.
+ */
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

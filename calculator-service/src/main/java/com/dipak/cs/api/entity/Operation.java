@@ -12,11 +12,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Dipak
+ * @version 1
+ * @apiNote entity class whose fields are used for the response for operation
+ *         to store in db.
+ */
+
+
 @Entity
 @Table(name = "OPERATION_TB")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Operation {
 	@Id
 	@GeneratedValue
