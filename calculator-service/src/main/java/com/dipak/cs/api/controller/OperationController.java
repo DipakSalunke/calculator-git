@@ -47,6 +47,7 @@ public class OperationController {
 	 * This method will return result of the operation. First this method will check
 	 * whether the date coming in the request parameter is valid.
 	 * 
+	 * Exceptions thrown during validation of input will be customized by {@link exceptionHandler} and returned
 	 * @param operation request body will be serialized to RequestedOperation model
 	 *                  and validated
 	 * @return result
