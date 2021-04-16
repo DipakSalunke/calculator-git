@@ -1,6 +1,5 @@
 package com.dipak.cs.api.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,16 +31,7 @@ public class OperationService {
 	
 	@Autowired
 	private OpResultRepository resrepository;
-	/**
-	 * JPA entity for storing operation details
-	 * @see Operation
-	 */
-	Operation operation = new Operation();
-	/**
-	 * JPA entity for storing result string with operation id
-	 * @see OpResult
-	 */
-	private OpResult result = new OpResult();
+	
 	
 	/**
 	 * validated {@link RequestedOperation} model mapped to {@link Operation} entity
@@ -54,6 +44,17 @@ public class OperationService {
 	
 	public OpResult saveOperation(RequestedOperation roperation) {
 		
+		/**
+		 * JPA entity for storing result string with operation id
+		 * @see OpResult
+		 */
+		OpResult result = new OpResult();
+		
+		/**
+		 * JPA entity for storing operation details
+		 * @see Operation
+		 */
+		Operation operation = new Operation();
 		operation.setNum1(Double.parseDouble(roperation.getNum1()));
 		operation.setNum2(Double.parseDouble(roperation.getNum2()));
 		operation.setOperator(roperation.getOperator());
@@ -65,7 +66,7 @@ public class OperationService {
 
 			s = "Sum of " + s + (operation.getNum1() + operation.getNum2());
 			break;
-		case "SUBSTRACT":
+		case "SUBTRACT":
 			s = "Substraction of " + s + (operation.getNum1() - operation.getNum2());
 			break;
 		case "DIVIDE":

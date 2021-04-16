@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 public class RequestedOperation {
 	
 	@NotBlank(message = "num1 cant be blank")
-	@Pattern(regexp="[0-9]*",message ="invalid number num1") //check if input is a number
+	@Pattern(regexp="[0-9]{1,13}(\\.[0-9]*)?",message ="invalid number num1") //check if input is a number
 	private String num1;
 	
-	@Pattern(regexp="[0-9]*",message ="invalid number num2") //check if input is a number
+	@Pattern(regexp="[0-9]{1,13}(\\.[0-9]*)?",message ="invalid number num2") //check if input is a number
 	@NotBlank(message = "num2 cant be blank")
 	private String num2;
 	

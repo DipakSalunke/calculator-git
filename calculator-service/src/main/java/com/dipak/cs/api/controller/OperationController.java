@@ -3,7 +3,6 @@ package com.dipak.cs.api.controller;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.dipak.cs.api.entity.OpResult;
 import com.dipak.cs.api.entity.Operation;
 import com.dipak.cs.api.model.Replay;
@@ -42,18 +39,21 @@ public class OperationController {
 	 */
 	@Autowired
 	private OperationService service;
-
+	
+	
 	/**
-	 * This method will return result of the operation. First this method will check
-	 * whether the date coming in the request parameter is valid.
+	 * This method will return result of the operation.
 	 * 
-	 * Exceptions thrown during validation of input will be customized by {@link exceptionHandler} and returned
+	 * Exceptions thrown during validation of input will be customized by
+	 * {@link exceptionHandler} and returned
+	 * 
 	 * @param operation request body will be serialized to RequestedOperation model
 	 *                  and validated
 	 * @return result
 	 */
 	@PostMapping("/operation")
-	public ResponseEntity<OpResult> operation(@RequestBody @Valid RequestedOperation roperation) {
+	public ResponseEntity<OpResult> performOperation(@RequestBody @Valid RequestedOperation roperation) {
+		
 		
 		OpResult result = service.saveOperation(roperation);
 
@@ -68,9 +68,9 @@ public class OperationController {
 	 */
 	@GetMapping("/operations")
 	public ResponseEntity<Map<Integer, String>> listOperations() {
-		
+
 		Map<Integer, String> list = service.getOperations();
-		
+
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
@@ -80,11 +80,11 @@ public class OperationController {
 	 * @param Replay This model holds id of the requested operation
 	 * @return result
 	 */
-	@GetMapping("/operation/replay")
+	@PostMapping("/operation/replay")
 	public ResponseEntity<Optional<OpResult>> replayOperation(@RequestBody @Valid Replay replay) {
-		
+
 		Optional<OpResult> result = service.getResult(replay.getReplaySeq());
-		
+
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

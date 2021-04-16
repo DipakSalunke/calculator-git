@@ -58,7 +58,7 @@ class OperationControllerTest {
 	
 	@Test
 	public void testOperation() throws Exception{
-		ResponseEntity<OpResult> rentity = operationController.operation(roperation);
+		ResponseEntity<OpResult> rentity = operationController.performOperation(roperation);
 		HttpStatus statusCode = rentity.getStatusCode();
 		assertNotNull(statusCode);
 		assertEquals(HttpStatus.OK,statusCode);
